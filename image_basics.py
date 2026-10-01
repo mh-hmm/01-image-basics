@@ -66,7 +66,7 @@ def to_numpy_array(img):
     TO_NUMPY_ARRAY:
     # todo: transform the SimpleITK image to a numpy ndarray (hint: 'GetArrayFromImage')
     """
-    np_img = None  # todo: modify here
+    np_img = sitk.GetArrayFromImage(img)
 
     return np_img
 
@@ -79,8 +79,8 @@ def to_sitk_image(np_image, reference_img):
     #  (hint: 'CopyInformation')! (otherwise defaults are set)
     """
 
-    img = None  # todo: modify here
-    # todo: ...
+    img = sitk.GetImageFromArray(np_image)
+    sitk.CopyInformation(reference_img, img)
 
     return img
 
@@ -94,7 +94,7 @@ def preprocess_rescale_numpy(np_img, new_min_val, new_max_val):
     max_val = np_img.max()
     min_val = np_img.min()
 
-    rescaled_np_img = None  # todo: modify here
+    rescaled_np_img = (((np_img - min_val)/(max_val - min_val))* (new_max_val - new_min_val)) + new_min_val
 
     return rescaled_np_img
 
@@ -105,7 +105,7 @@ def preprocess_rescale_sitk(img, new_min_val, new_max_val):
     # todo: rescale the intensities of the img to the range [new_min_val, new_max_val]
     # (hint: RescaleIntensity)
     """
-    rescaled_img = None  # todo: modify here
+    rescaled_img = sitk.RescaleIntensity(img,new_min_val,new_max_val)
 
     return rescaled_img
 
